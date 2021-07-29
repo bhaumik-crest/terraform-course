@@ -8,6 +8,10 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.mykey.key_name
 
+  tags = {
+    "name" = "ExampleServer"
+  }
+
   provisioner "file" {
     source      = "script.sh"
     destination = "/tmp/script.sh"
@@ -15,7 +19,7 @@ resource "aws_instance" "example" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/script.sh",
-      "sudo sed -i -e 's/\r$//' /tmp/script.sh",  # Remove the spurious CR characters.
+      "sudo sed -i -e 's/\r$//' /tmp/script.sh", # Remove the spurious CR characters.
       "sudo /tmp/script.sh",
     ]
   }
