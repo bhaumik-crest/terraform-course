@@ -1,30 +1,30 @@
 # group definition
-resource "aws_iam_group" "administrators" {
-  name = "administrators"
+resource "aws_iam_group" "s3-administrators" {
+  name = "s3-administrators"
 }
 
-resource "aws_iam_policy_attachment" "administrators-attach" {
-  name       = "administrators-attach"
-  groups     = [aws_iam_group.administrators.name]
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+resource "aws_iam_policy_attachment" "s3-administrators-attach" {
+  name       = "s3-administrators-attach"
+  groups     = [aws_iam_group.s3-administrators.name]
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
 # user
-resource "aws_iam_user" "admin1" {
-  name = "admin1"
+resource "aws_iam_user" "s3-admin1" {
+  name = "s3-admin1"
 }
 
-resource "aws_iam_user" "admin2" {
-  name = "admin2"
+resource "aws_iam_user" "s3-admin2" {
+  name = "s3-admin2"
 }
 
-resource "aws_iam_group_membership" "administrators-users" {
-  name = "administrators-users"
+resource "aws_iam_group_membership" "s3-administrators-users" {
+  name = "s3-administrators-users"
   users = [
-    aws_iam_user.admin1.name,
-    aws_iam_user.admin2.name,
+    aws_iam_user.s3-admin1.name,
+    aws_iam_user.s3-admin2.name,
   ]
-  group = aws_iam_group.administrators.name
+  group = aws_iam_group.s3-administrators.name
 }
 
 output "warning" {
